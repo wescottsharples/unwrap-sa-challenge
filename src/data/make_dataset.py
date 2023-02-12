@@ -20,6 +20,8 @@ def load_df() -> pd.DataFrame:
         pd.DataFrame: Dataset as a pandas DataFrame
     """
     df = pd.read_csv(DATASET_PATH)
+    INVERSE_LABEL_MAPPING = {v: k for k, v in LABEL_MAPPING.items()}
+    df["label"] = df["sentiment_output"].map(INVERSE_LABEL_MAPPING)
     return df
 
 

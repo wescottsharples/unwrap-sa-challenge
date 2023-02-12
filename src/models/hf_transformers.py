@@ -2,7 +2,7 @@
 
 from transformers import pipeline
 
-from src.config import device
+from src.config import LABEL_MAPPING, device
 
 
 def get_pipes() -> dict:
@@ -43,12 +43,6 @@ def add_pipe(name: str, model: str, pipes: dict):
         model (str): HuggingFace model name
         pipes (dict): dictionary of pipelines
     """
-
-    LABEL_MAPPING = {
-        0: "NEGATIVE",
-        1: "NEUTRAL",
-        2: "POSITIVE",
-    }  # all models share this mapping
 
     pipes[name] = pipeline(
         "sentiment-analysis",

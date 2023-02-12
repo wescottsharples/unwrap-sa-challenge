@@ -10,7 +10,7 @@ import pandas as pd
 from datasets.arrow_dataset import Dataset
 from sklearn.model_selection import train_test_split
 
-from src.config import DATASET_PATH, RANDOM_SEED
+from src.config import DATASET_PATH, LABEL_MAPPING, RANDOM_SEED
 
 
 def load_df() -> pd.DataFrame:

@@ -19,3 +19,8 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 PARENT_DIR = Path(__file__).parent.parent
 SENTIMENT_ANNOTATIONS_CSV = PARENT_DIR / "data" / "raw" / "sentiment_annotations.csv"
 DATASET_PATH = SENTIMENT_ANNOTATIONS_CSV
+LABEL_MAPPING = {
+    0: "NEGATIVE",
+    1: "NEUTRAL",
+    2: "POSITIVE",
+}  # all models from the HuggingFace library use this mapping, so we will too

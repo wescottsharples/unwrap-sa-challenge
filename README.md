@@ -10,8 +10,7 @@ Finally, I explored the potential of zero-shot and few-shot classification using
 
 I went ahead with an 80/20 train/test split of the data extracted from sentiment_annotations.csv.
 
-A summary of the results is shown below:
-- Note the `Accuracy` is given by the support-weighted mean of F1 scores per label.
+A summary of the results is shown below (`Accuracy` is given by the support-weighted mean of F1 scores per label):
 
 | Model             | Accuracy | Inference Time |
 | ----------------- | -------- | -------------- |

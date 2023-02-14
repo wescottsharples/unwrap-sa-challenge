@@ -1,6 +1,6 @@
 # Sentiment Analysis Challenge
 
-The aim of this challenge was to boost the accuracy of a sentiment analysis model for customer feedback. Given the small annotated dataset of 300 rows, I focused on utilizing two innovative techniques for sentiment analysis with limited data: sequential transfer learning and zero/few shot classification using an LLM.
+The aim of this challenge was to boost the accuracy of a sentiment analysis model for customer feedback. Given the small annotated dataset of 300 rows, I focused on utilizing two innovative techniques for sentiment analysis with limited data: sequential transfer learning and zero/few shot classification using an LLM.  
 
 I evaluated the performance of three fine-tuned transformers from HuggingFace Hub: `cardiffnlp/twitter-roberta-base-sentiment-latest`, `Seethal/sentiment_analysis_generic_dataset`, and `j-hartmann/sentiment-roberta-large-english-3-classes`. These models were chosen as they support multi-class sentiment analysis and represent state-of-the-art in fine-tuned transformers
 
@@ -10,4 +10,27 @@ Finally, I explored the potential of zero-shot and few-shot classification using
 
 I went ahead with an 80/20 train/test split of the data extracted from sentiment_annotations.csv.
 
-Here are the results:
+A summary of the results is shown below:
+- Note the `Accuracy` is given by the support-weighted mean of F1 scores per label.
+
+| Model             | Accuracy | Inference Time |
+| ----------------- | -------- | -------------- |
+| Baseline          | 72%      |                |
+| SetFit            | 80%      | 0.16s          |
+| Hartmann          | 75%      | 1.17s          |
+| GPT-3 (zero-shot) | 73%      |                |
+| GPT-3 (few-shot)  | 72%      |                |
+| Cardiff NLP       | 68%      | 1.4s           |
+| Seethal           | 68%      | 0.31s               |
+
+I think the results speak for themselves. The fine-tuned SetFit model was the best performer both in terms of accuracy and inference time and would be my recommendation. I wanted to experiment with generating additional training samples using an LLM such as GPT-3 to further fine-tune, but ultimately ran out of time.
+
+If you want to further insight into my though process please see the `notebooks`. To reproduce the results on the latest data in MySQL, please run the following:
+
+```bash
+python --version # 3.10
+pip install -r requirements.txt
+python scripts/compare_all_models.py
+```
+
+This will product both a `results.txt` file for high-level results and a `data/results/results.pkl` file for the full results dictionary.

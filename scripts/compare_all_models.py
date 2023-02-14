@@ -105,12 +105,12 @@ def save_readable_results_file(results: dict, now_str: str):
 
     with open("results.txt", "w") as f:
         f.write("Sentiment Analysis Results\n")
+        f.write(f"Date: {now_str}\n\n\n")
         f.write(f"Total models evaluated: {len(flattened_results)}\n\n\n")
         for name, result in flattened_results_sorted:
             f.write(f"Results for {name}: \n")
             f.write(f"Accuracy: {result['accuracy']:.2f}\n")
             f.write(f"Inference time: {result['time']:.2f} seconds\n\n")
-            f.write(f"Classification report: \n")
             # use rich to print the classification report
             f.write(f"{result['report_str']}\n")
             f.write(f"Example predictions: \n")

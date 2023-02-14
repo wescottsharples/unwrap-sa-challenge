@@ -1,5 +1,5 @@
 Sentiment Analysis Results
-Date: 20230213_190453
+Date: 20230213_191408
 
 
 Total models evaluated: 6
@@ -7,7 +7,7 @@ Total models evaluated: 6
 
 Results for setfit - setfit: 
 Accuracy: 0.80
-Inference time: 2.50 seconds
+Inference time: 2.82 seconds
 
               precision    recall  f1-score   support
 
@@ -20,3 +20,127 @@ Inference time: 2.50 seconds
 weighted avg       0.80      0.80      0.80        60
 
 Example predictions: 
+|    | entry                                            | label_str   | preds    |
+|---:|:-------------------------------------------------|:------------|:---------|
+|  0 | How do you guys deal with repacks on the line... | NEUTRAL     | NEUTRAL  |
+|  1 | I had Calvin as my driver to the Punta Gorda ... | POSITIVE    | POSITIVE |
+|  2 | i just started i'm in training and they give ... | NEGATIVE    | NEGATIVE |
+--------------------------------------------
+
+
+Results for hf - roberta_hartmann: 
+Accuracy: 0.75
+Inference time: 18.81 seconds
+
+              precision    recall  f1-score   support
+
+    NEGATIVE       0.74      0.77      0.75        30
+     NEUTRAL       0.60      0.56      0.58        16
+    POSITIVE       0.93      0.93      0.93        14
+
+    accuracy                           0.75        60
+   macro avg       0.76      0.75      0.75        60
+weighted avg       0.75      0.75      0.75        60
+
+Example predictions: 
+|    | entry                                            | label_str   | preds    |
+|---:|:-------------------------------------------------|:------------|:---------|
+|  0 | How do you guys deal with repacks on the line... | NEUTRAL     | NEUTRAL  |
+|  1 | I had Calvin as my driver to the Punta Gorda ... | POSITIVE    | POSITIVE |
+|  2 | i just started i'm in training and they give ... | NEGATIVE    | NEGATIVE |
+--------------------------------------------
+
+
+Results for openai - zero_shot: 
+Accuracy: 0.73
+Inference time: 0.19 seconds
+
+              precision    recall  f1-score   support
+
+    NEGATIVE       0.88      0.70      0.78        30
+     NEUTRAL       0.53      0.56      0.55        16
+    POSITIVE       0.74      1.00      0.85        14
+
+    accuracy                           0.73        60
+   macro avg       0.71      0.75      0.72        60
+weighted avg       0.75      0.73      0.73        60
+
+Example predictions: 
+|    | entry                                            | label_str   | preds    |
+|---:|:-------------------------------------------------|:------------|:---------|
+|  0 | How do you guys deal with repacks on the line... | NEUTRAL     | NEUTRAL  |
+|  1 | I had Calvin as my driver to the Punta Gorda ... | POSITIVE    | POSITIVE |
+|  2 | i just started i'm in training and they give ... | NEGATIVE    | NEGATIVE |
+--------------------------------------------
+
+
+Results for openai - few_shot: 
+Accuracy: 0.72
+Inference time: 0.06 seconds
+
+              precision    recall  f1-score   support
+
+    NEGATIVE       0.79      0.63      0.70        30
+     NEUTRAL       0.50      0.62      0.56        16
+    POSITIVE       0.88      1.00      0.93        14
+
+    accuracy                           0.72        60
+   macro avg       0.72      0.75      0.73        60
+weighted avg       0.73      0.72      0.72        60
+
+Example predictions: 
+|    | entry                                            | label_str   | preds    |
+|---:|:-------------------------------------------------|:------------|:---------|
+|  0 | How do you guys deal with repacks on the line... | NEUTRAL     | NEUTRAL  |
+|  1 | I had Calvin as my driver to the Punta Gorda ... | POSITIVE    | POSITIVE |
+|  2 | i just started i'm in training and they give ... | NEGATIVE    | NEGATIVE |
+--------------------------------------------
+
+
+Results for hf - roberta_cardiffnlp: 
+Accuracy: 0.68
+Inference time: 4.74 seconds
+
+              precision    recall  f1-score   support
+
+    NEGATIVE       0.77      0.67      0.71        30
+     NEUTRAL       0.50      0.50      0.50        16
+    POSITIVE       0.72      0.93      0.81        14
+
+    accuracy                           0.68        60
+   macro avg       0.66      0.70      0.68        60
+weighted avg       0.69      0.68      0.68        60
+
+Example predictions: 
+|    | entry                                            | label_str   | preds    |
+|---:|:-------------------------------------------------|:------------|:---------|
+|  0 | How do you guys deal with repacks on the line... | NEUTRAL     | NEUTRAL  |
+|  1 | I had Calvin as my driver to the Punta Gorda ... | POSITIVE    | POSITIVE |
+|  2 | i just started i'm in training and they give ... | NEGATIVE    | NEGATIVE |
+--------------------------------------------
+
+
+Results for hf - bert_seethal: 
+Accuracy: 0.68
+Inference time: 2.39 seconds
+
+              precision    recall  f1-score   support
+
+    NEGATIVE       0.84      0.53      0.65        30
+     NEUTRAL       0.52      0.75      0.62        16
+    POSITIVE       0.72      0.93      0.81        14
+
+    accuracy                           0.68        60
+   macro avg       0.70      0.74      0.69        60
+weighted avg       0.73      0.68      0.68        60
+
+Example predictions: 
+|    | entry                                            | label_str   | preds    |
+|---:|:-------------------------------------------------|:------------|:---------|
+|  0 | How do you guys deal with repacks on the line... | NEUTRAL     | NEUTRAL  |
+|  1 | I had Calvin as my driver to the Punta Gorda ... | POSITIVE    | POSITIVE |
+|  2 | i just started i'm in training and they give ... | NEGATIVE    | NEGATIVE |
+--------------------------------------------
+
+
+See data/results/results_20230213_191408.pkl for more details.

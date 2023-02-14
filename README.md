@@ -31,7 +31,6 @@ If you would like further insight into my thought process please see the [`noteb
 ```bash
 python --version # ~3.10
 mv .env.example .env # add OPENAI_API_KEY if you want to call GPT-3
-pip install -r requirements.txt
 pip install -e .
 python scripts/compare_all_models.py
 ```

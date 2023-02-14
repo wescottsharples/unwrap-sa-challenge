@@ -25,10 +25,11 @@ A summary of the results is shown below:
 
 I think the results speak for themselves. The fine-tuned SetFit model was the best performer both in terms of accuracy and inference time and would be my recommendation. I wanted to experiment with generating additional training samples using an LLM such as GPT-3 to further fine-tune, but ultimately ran out of time.
 
-If you want to further insight into my though process please see the `notebooks`. To reproduce the results on the latest data in MySQL, please run the following:
+If you would like further insight into my thought process please see the [`notebooks`](notebooks). To reproduce the results on the latest data in MySQL, please run the following:
 
 ```bash
 python --version # 3.10
+mv .env.example .env # add OPENAI_API_KEY if you want to call GPT-3
 pip install -r requirements.txt
 python scripts/compare_all_models.py
 ```

@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "poetry.lock": true,
+        ".python-version": true,
+        ".vscode": true,
+    },
+    "explorer.excludeGitIgnore": true,
+    "python.envFile": "${workspaceFolder}/src/.env",
+}

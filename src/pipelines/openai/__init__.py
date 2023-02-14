@@ -10,6 +10,7 @@ def get_openai_pipelines() -> dict:
     Returns:
         dict: The OpenAI pipelines
     """
+    print("Loading OpenAI pipelines...")
     return {
         "zero_shot": ZeroShotPipeline(),
         # "zero_shot_with_title": ZeroShotPipelineWithTitle(), # TODO: Test this (didn't have time)

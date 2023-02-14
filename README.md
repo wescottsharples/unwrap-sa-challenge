@@ -29,9 +29,10 @@ I think the results speak for themselves. The fine-tuned SetFit model was the be
 If you would like further insight into my thought process please see the [`notebooks`](notebooks). To reproduce the results on the latest data in MySQL, you can use the following:
 
 ```bash
-python --version # 3.10
+python --version # ~3.10
 mv .env.example .env # add OPENAI_API_KEY if you want to call GPT-3
 pip install -r requirements.txt
+pip install -e .
 python scripts/compare_all_models.py
 ```
 

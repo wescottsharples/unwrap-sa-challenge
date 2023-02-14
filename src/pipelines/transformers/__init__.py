@@ -22,6 +22,7 @@ def get_transformer_pipelines() -> dict:
     ]  # NOTE: See `README.md` for details on the models
 
     for name, model in models:
+        print(f"Loading pipeline for {name}...")
         pipe = pipeline(
             "sentiment-analysis",
             model=model,

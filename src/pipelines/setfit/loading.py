@@ -22,6 +22,7 @@ def load_setfit_model() -> SetFitModel:
         SetFitModel: SetFit model
     """
     # if it exists locally, load it
+    print(f"Loading SetFit pipeline...")
     if os.path.exists(SETFIT_MODEL_PATH):
         return load_local_setfit_model()
     # otherwise, download it from the HuggingFace Hub

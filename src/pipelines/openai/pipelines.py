@@ -53,7 +53,6 @@ class OpenAIPipeline:
         Returns:
             text (str): The truncated text
         """
-        encoder = "gpt2"
         encoder = "p50k_base"
         # create a GPT-3 encoder instance
         enc = tiktoken.get_encoding(encoder)

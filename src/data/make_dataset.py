@@ -1,28 +1,14 @@
-"""Dataset loading and preprocessing
+"""Module for loading and preprocessing our sentiment analysis dataset."""
 
-The dataset should be placed in the `data/raw` folder as a csv file
-and the path should be specified in the `config.py` file using the
-`DATASET_PATH` variable.
-"""
 
+import os
 
 import pandas as pd
-from datasets.arrow_dataset import Dataset
+from datasets import Dataset, DatasetDict  # type: ignore
 from sklearn.model_selection import train_test_split
 
 from src.config import DATASET_PATH, LABEL_MAPPING, RANDOM_SEED
-
-
-def load_df() -> pd.DataFrame:
-    """Load the dataset as a pandas DataFrame
-
-    Returns:
-        pd.DataFrame: Dataset as a pandas DataFrame
-    """
-    df = pd.read_csv(DATASET_PATH)
-    INVERSE_LABEL_MAPPING = {v: k for k, v in LABEL_MAPPING.items()}
-    df["label"] = df["sentiment_output"].map(INVERSE_LABEL_MAPPING)
-    return df
+from src.connections import get_mysql_connection
 
 
 def split_dataset(df: pd.DataFrame) -> tuple:
@@ -38,14 +24,78 @@ def split_dataset(df: pd.DataFrame) -> tuple:
     return train, test
 
 
-def load_dataset() -> dict:
+def add_label_column(df: pd.DataFrame) -> None:
+    """Add a "label" column to the DataFrame with integer values
+
+    Args:
+        df (pd.DataFrame): Dataset as a pandas DataFrame
+    """
+    INVERSE_LABEL_MAPPING = {v: k for k, v in LABEL_MAPPING.items()}
+    label_key = "sentiment_output" if "sentiment_output" in df.columns else "sentiment"
+    df["label_str"] = df[label_key]  # alias for the original label
+    df["label"] = df[label_key].map(INVERSE_LABEL_MAPPING)
+
+
+def load_dataset_from_file(dataset_path: os.PathLike) -> dict:
     """Load the dataset as a HuggingFace dataset
 
     Returns:
         dict: HuggingFace dataset
     """
-    df = load_df()
+    df = pd.read_csv(dataset_path)
+    add_label_column(df)
     train, test = split_dataset(df)
-    train_ds = Dataset.from_pandas(train)
-    test_ds = Dataset.from_pandas(test)
-    return {"train": train_ds, "test": test_ds}
+    return DatasetDict({"train": Dataset.from_pandas(train), "test": Dataset.from_pandas(test)})
+
+
+def load_dataset_from_mysql() -> dict:
+    """Load the dataset as a HuggingFace dataset from MySQL
+
+    Returns:
+        dict: HuggingFace dataset
+    """
+    print("Loading dataset from MySQL...")
+    conn = get_mysql_connection()
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM feedback_entries")
+        result = cursor.fetchall()
+    df = pd.DataFrame(result)
+    df.columns = [i[0] for i in cursor.description]
+    add_label_column(df)
+    # No need to split since we consider the whole dataset as the test set
+    return DatasetDict({"test": Dataset.from_pandas(df)})
+
+
+def load_datasets() -> tuple[dict, dict]:
+    """Load the latest datasets from both file and MySQL
+
+    Returns:
+        tuple[dict, dict]: Datasets as HuggingFace datasets (file, MySQL)
+    """
+    return load_dataset_from_file(DATASET_PATH), load_dataset_from_mysql()
+
+
+def load_latest_test_dataset() -> Dataset:
+    """Load the latest test data from MySQL
+
+    NOTE: Removes any examples which appear in file's training data
+
+    Returns:
+        dict: Test dataset as a HuggingFace dataset
+    """
+    file_dataset, mysql_dataset = load_datasets()
+    file_train_df = file_dataset["train"].to_pandas()
+    mysql_test_df = mysql_dataset["test"].to_pandas()
+    # Remove any examples which appear in file's training data
+    mysql_test_df = mysql_test_df[~mysql_test_df["id"].isin(file_train_df["id"])]
+    return Dataset.from_pandas(mysql_test_df)
+
+
+def load_latest_train_dataset() -> Dataset:
+    """Load the latest training data from file
+
+    Returns:
+        dict: Training dataset as a HuggingFace dataset
+    """
+    dataset = load_dataset_from_file(DATASET_PATH)
+    return dataset["train"]
